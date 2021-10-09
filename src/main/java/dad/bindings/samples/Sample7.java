@@ -2,47 +2,50 @@ package dad.bindings.samples;
 
 import javafx.application.Application;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.converter.NumberStringConverter;
 
-/**
- * Sample7
- */
-public class Sample7 extends Application{
+public class Sample7 extends Application {
+	
+	private TextField numeroText;
+	
+	private StringProperty texto = new SimpleStringProperty("3,1416");
+	
+	private DoubleProperty numero = new SimpleDoubleProperty(6.25);
 
-    private TextField numero1Text,numero2TexT,resultadoText;
-    private DoubleProperty numero1,numero2,resultado;
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		
+		numeroText = new TextField();
+		numeroText.setMaxWidth(100);
 
-    @Override
-    public void start( Stage primaryStage) throws Exception{
-        
-        numero1Text = new TextField();
+		VBox root = new VBox(5);
+		root.setAlignment(Pos.CENTER);
+		root.getChildren().addAll(numeroText);
 
-        numero2TexT = new TextField();
-        
-        resultadoText = new TextField();
-    
-        VBox root = new VBox();
-        root.setSpacing(5);
-        root.setAlignment(Pos.CENTER);
-        root.setFillWidth(false);
-        root.getChildren().addAll(numero1Text,numero2TexT,resultadoText);
+		Scene scene = new Scene(root, 320, 200);
 
+		numeroText.textProperty().bindBidirectional(texto);
+		
+		texto.bindBidirectional(numero, new NumberStringConverter());
+		
+		numero.addListener((o,ov,nv) -> System.out.println(nv));
+		
+		primaryStage.setScene(scene);
+		primaryStage.setTitle("Binding sample 2");
+		primaryStage.show();
+		
+	}
 
-        Scene scene = new Scene(root, 320,200);
+	public static void main(String[] args) {
+		launch(args);
+	}
 
-
-        primaryStage.setTitle("Sumatorio");
-        primaryStage.setScene(scene);
-        primaryStage.show();;
-
-
-    }
-
-    public static void main(String[] args) {
-        launch(args);
-    }
 }
