@@ -1,7 +1,6 @@
 package dad.bindings.samples;
 
 import javafx.application.Application;
-import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringExpression;
 import javafx.geometry.Pos;
